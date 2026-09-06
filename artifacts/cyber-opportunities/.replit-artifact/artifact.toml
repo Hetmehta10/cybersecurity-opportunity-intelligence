@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Cyber Opportunity Intelligence"
+description = "A trustworthy opportunity intelligence platform for cybersecurity students and early-career professionals in India to discover internships and entry-level roles matched to their skills, preferences, and experience."
+version = "1.0.0"
+id = "artifacts/cyber-opportunities"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24672
+
+[services.development]
+run = "pnpm --filter @workspace/cyber-opportunities run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/cyber-opportunities", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/cyber-opportunities/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24672"
+BASE_PATH = "/"
